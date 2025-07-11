@@ -1,0 +1,6 @@
+export enum Industry {
+    FINANCE = 'FINANCE',
+    HEALTHCARE = 'HEALTHCARE',
+    TECHNOLOGY = 'TECHNOLOGY',
+    EDUCATION = 'EDUCATION',
+}

@@ -1,0 +1,22 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+ENV NODE_ENV=development
+
+RUN apk add --no-cache postgresql-client
+
+RUN npm install -g db-migrate db-migrate-pg
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["/docker-entrypoint.sh"]
