@@ -6,6 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { IndustryChangeApplication } from './industry-change-application/entities/industry-change-application.entity';
 import { ResidentModule } from './resident/resident.module';
 import { Resident } from './resident/entities/resident.entity';
+import * as fs from 'fs';
+
+const sslConfig = process.env.NODE_ENV === 'production' ? {
+  rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false',
+  ca: process.env.NODE_ENV === 'production' ? 
+    fs.readFileSync('/app/certs/eu-north-1-bundle.pem').toString() : 
+    undefined
+} : false;
 
 @Module({
   imports: [
@@ -22,6 +30,7 @@ import { Resident } from './resident/entities/resident.entity';
       ],
       migrations: undefined,
       synchronize: false,
+      ssl: sslConfig,
     }),
     IndustryChangeApplicationModule,
     ResidentModule,

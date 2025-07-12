@@ -3,9 +3,10 @@ set -e
 
 echo "Waiting for database to be ready..."
 
-# Function to check if postgres is ready using pg_isready
 wait_for_postgres() {
   echo "Checking if postgres is ready..."
+  # Set PGSSLMODE environment variable to require SSL
+  export PGSSLMODE=require
   until pg_isready -h $DATABASE_HOST -p $DATABASE_PORT -U $DATABASE_USER; do
     echo "Postgres is unavailable - sleeping"
     sleep 2

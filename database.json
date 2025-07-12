@@ -15,6 +15,10 @@
     "database": "${DATABASE_NAME}",
     "user": "${DATABASE_USER}",
     "password": "${DATABASE_PASSWORD}",
-    "schema": "public"
+    "schema": "public",
+    "ssl": {
+      "rejectUnauthorized": true,
+      "ca": "/app/certs/eu-north-1-bundle.pem"
+    }
   }
 }
