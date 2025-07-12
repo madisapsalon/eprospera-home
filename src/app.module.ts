@@ -8,15 +8,9 @@ import { ResidentModule } from './resident/resident.module';
 import { Resident } from './resident/entities/resident.entity';
 import * as fs from 'fs';
 
-const sslConfig = process.env.NODE_ENV === 'production' ? {
-  // Allow setting rejectUnauthorized via environment variable
-  rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false',
-  ca: process.env.NODE_ENV === 'production' ? 
-    fs.readFileSync('/app/certs/eu-north-1-bundle.pem').toString() : 
-    undefined,
-  // Add these options to help with certificate verification
-  checkServerIdentity: () => undefined // Skip hostname verification
-} : false;
+// In production, use SSL with minimal configuration
+// The NODE_TLS_REJECT_UNAUTHORIZED=0 environment variable will handle certificate validation globally
+const sslConfig = process.env.NODE_ENV === 'production' ? true : false;
 
 @Module({
   imports: [

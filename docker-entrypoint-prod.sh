@@ -5,6 +5,10 @@ set -e
 # Set to false if you're having certificate verification issues
 export DATABASE_SSL_REJECT_UNAUTHORIZED=${DATABASE_SSL_REJECT_UNAUTHORIZED:-false}
 
+# This is a more direct approach to fix SSL certificate issues
+# It disables Node.js TLS certificate validation globally
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+
 echo "Waiting for database to be ready..."
 
 wait_for_postgres() {
