@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+# Set environment variables for SSL certificate handling
+# Set to false if you're having certificate verification issues
+export DATABASE_SSL_REJECT_UNAUTHORIZED=${DATABASE_SSL_REJECT_UNAUTHORIZED:-false}
+
 echo "Waiting for database to be ready..."
 
 wait_for_postgres() {

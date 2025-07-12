@@ -17,7 +17,7 @@
     "password": "${DATABASE_PASSWORD}",
     "schema": "public",
     "ssl": {
-      "rejectUnauthorized": true,
+      "rejectUnauthorized": "${DATABASE_SSL_REJECT_UNAUTHORIZED:true}",
       "ca": "/app/certs/eu-north-1-bundle.pem"
     }
   }
