@@ -12,8 +12,6 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-ENV NODE_ENV=production
-
 RUN apk add --no-cache postgresql-client
 RUN npm install -g db-migrate db-migrate-pg
 
