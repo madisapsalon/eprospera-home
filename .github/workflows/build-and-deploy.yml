@@ -13,12 +13,12 @@ env:
   AWS_REGION: eu-north-1
   ECR_REPOSITORY: eprospera-home
   AWS_ROLE_ARN: arn:aws:iam::386503254939:role/GitHub-Actions-ECR-Role
+  ECS_CLUSTER: eprospera-home
+  ECS_SERVICE: eprospera-home-td-service-q9yek5wx
 
 jobs:
-  test-and-build-and-push:
+  test:
     runs-on: ubuntu-latest
-    env:
-      IMAGE_TAG: ${{ github.sha }}
     steps:
     - uses: actions/checkout@v4
 
@@ -32,6 +32,14 @@ jobs:
 
     - name: Run tests
       run: npm run test
+
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${{ github.sha }}
+    steps:
+    - uses: actions/checkout@v4
       
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -52,4 +60,20 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         echo "Image pushed to $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         echo "Image pushed to $ECR_REGISTRY/$ECR_REPOSITORY:latest"
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ env.AWS_ROLE_ARN }}
+        aws-region: ${{ env.AWS_REGION }}
+        
+    - name: Force new deployment
+      run: |
+        aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} \
+                             --service ${{ env.ECS_SERVICE }} \
+                             --force-new-deployment
     
