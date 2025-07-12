@@ -26,7 +26,7 @@ COPY --from=builder /app/database.json ./database.json
 
 # Create directory for certificates and copy the CA certificate
 RUN mkdir -p /app/certs
-COPY certs/eu-north-1-bundle.pem /app/certs/
+COPY certs/global-bundle.pem /app/certs/
 
 COPY docker-entrypoint-prod.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh

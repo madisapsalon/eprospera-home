@@ -18,7 +18,7 @@
     "schema": "public",
     "ssl": {
       "rejectUnauthorized": "${DATABASE_SSL_REJECT_UNAUTHORIZED:true}",
-      "ca": "/app/certs/eu-north-1-bundle.pem"
+      "ca": "/app/certs/global-bundle.pem"
     }
   }
 }

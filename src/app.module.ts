@@ -12,8 +12,8 @@ import * as fs from 'fs';
 const sslConfig = process.env.NODE_ENV === 'production' ? {
   // Only disable certificate validation if explicitly set to false
   rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false',
-  ca: process.env.NODE_ENV === 'production' && fs.existsSync('/app/certs/eu-north-1-bundle.pem') ?
-    fs.readFileSync('/app/certs/eu-north-1-bundle.pem').toString() : undefined,
+  ca: process.env.NODE_ENV === 'production' && fs.existsSync('/app/certs/global-bundle.pem') ?
+    fs.readFileSync('/app/certs/global-bundle.pem').toString() : undefined,
   // Use proper hostname verification in production
   checkServerIdentity: (host, cert) => {
     // You can implement custom hostname verification logic here if needed
