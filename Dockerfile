@@ -24,7 +24,6 @@ COPY --from=builder /app/database.json ./database.json
 
 RUN mkdir -p /app/certs
 COPY certs/rds-ca-bundle.pem /app/certs/
-RUN chmod 644 /app/certs/rds-ca-bundle.pem
 
 COPY docker-entrypoint-prod.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh

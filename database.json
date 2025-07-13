@@ -17,11 +17,7 @@
     "password": "${DATABASE_PASSWORD}",
     "schema": "public",
     "ssl": {
-      "ca": {
-        "ENV": "RDS_CA_BUNDLE_PATH",
-        "DEFAULT": "/app/certs/rds-ca-bundle.pem"
-      },
-      "rejectUnauthorized": true
+      "rejectUnauthorized": false
     }
   }
 }
