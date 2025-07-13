@@ -16,6 +16,8 @@
     "user": "${DATABASE_USER}",
     "password": "${DATABASE_PASSWORD}",
     "schema": "public",
-    "ssl": true
+    "ssl": {
+      "rejectUnauthorized": false
+    }
   }
 }
