@@ -22,6 +22,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/migrations ./migrations
 COPY --from=builder /app/database.json ./database.json
 
+RUN mkdir -p /app/certs
+COPY certs/rds-ca-bundle.pem /app/certs/
+
 COPY docker-entrypoint-prod.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 

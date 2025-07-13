@@ -6,25 +6,31 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { IndustryChangeApplication } from './industry-change-application/entities/industry-change-application.entity';
 import { ResidentModule } from './resident/resident.module';
 import { Resident } from './resident/entities/resident.entity';
+import * as fs from 'fs';
 
-const sslConfig = process.env.NODE_ENV === 'production' ? true : false;
+const isProd = process.env.NODE_ENV === 'production';
+
+const ssl = isProd
+  ? {
+      ca: fs.readFileSync(
+        process.env.RDS_CA_BUNDLE_PATH || '/app/certs/rds-ca-bundle.pem',
+      ).toString(),
+      rejectUnauthorized: true,
+    }
+  : undefined;
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DATABASE_HOST || 'localhost',
-      port: parseInt(process.env.DATABASE_PORT ?? '5432', 10),
-      username: process.env.DATABASE_USER || 'postgres',
-      password: process.env.DATABASE_PASSWORD || 'postgres',
-      database: process.env.DATABASE_NAME || 'eprospera',
-      entities: [
-        IndustryChangeApplication,
-        Resident,
-      ],
-      migrations: undefined,
+      host: process.env.DATABASE_HOST,
+      port: Number(process.env.DATABASE_PORT ?? 5432),
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      entities: [IndustryChangeApplication, Resident],
       synchronize: false,
-      ssl: sslConfig,
+      ssl,
     }),
     IndustryChangeApplicationModule,
     ResidentModule,
