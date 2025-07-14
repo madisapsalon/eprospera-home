@@ -10,6 +10,8 @@ docker compose up
 
 The application will be available at [http://localhost:3000](http://localhost:3000)
 
+It also migrates initial data to database.
+
 ## API Documentation
 
 ### Health check
@@ -26,14 +28,14 @@ Request body:
   "residentSub": "sub-001",
   "willWorkInPhysicalJurisdiction": true,
   "industry": "HEALTHCARE",
-  "regulatoryElection": "OPTION_B",
+  "regulatoryElection": "REG_ELECT_1",
   "regulatoryElectionSub": "sub-regulatory-option"
 }
 ```
 
 ### Get industry change applications
 
-GET [/industry-change-applications](/industry-change-applications)
+GET [/industry-change-application?residentSub=sub-001&statuses=APPROVED&statuses=REJECTED](/industry-change-application?residentSub=sub-001&statuses=APPROVED&statuses=REJECTED)
 
 ### Get industry change application by id
 
