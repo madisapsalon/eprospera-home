@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, FindManyOptions, FindOneOptions, FindOptions } from 'typeorm';
 import { CreateIndustryChangeApplicationDto } from './dto/create-industry-change-application.dto';
 import { IndustryChangeApplication } from './entities/industry-change-application.entity';
-import { Resident, ResidentStatus, TypeOfRegistration } from '../resident/entities/resident.entity';
+import { Resident } from '../resident/entities/resident.entity';
 import { ApplicationStatus } from './enums/application-status.enum';
 import { ObjectStatus } from './enums/object-status.enum';
 import { IndustryChangeApplicationResponseDto } from './dto/industry-change-application-response.dto';
 import { IndustryChangeApplicationMapper } from './mappers/industry-change-application.mapper';
 import { FindIndustryChangeApplicationsDto } from './dto/find-industry-change-applications.dto';
+import { TypeOfRegistration } from '../resident/enums/type-of-registration.enum';
+import { ResidentStatus } from '../resident/enums/resident-status.enum';
 
 @Injectable()
 export class IndustryChangeApplicationService {
@@ -55,9 +57,9 @@ export class IndustryChangeApplicationService {
       currentRegulatoryElection: resident.regulatoryElection,
       currentRegulatoryElectionSub: resident.regulatoryElectionSub,
       requestedWillWorkInPhysicalJurisdiction: createDto.willWorkInPhysicalJurisdiction,
-      requestedIndustry: createDto.industry ?? undefined,
-      requestedRegulatoryElection: createDto.regulatoryElection ?? undefined,
-      requestedRegulatoryElectionSub: createDto.regulatoryElectionSub ?? undefined,
+      requestedIndustry: createDto.industry ?? null,
+      requestedRegulatoryElection: createDto.regulatoryElection ?? null,
+      requestedRegulatoryElectionSub: createDto.regulatoryElectionSub ?? null,
       status,
       submittedAt: now,
       decisionDecidedAt: status === ApplicationStatus.APPROVED ? now : undefined,
@@ -68,9 +70,9 @@ export class IndustryChangeApplicationService {
 
     if (status === ApplicationStatus.APPROVED) {
       resident.willWorkInPhysicalJurisdiction = createDto.willWorkInPhysicalJurisdiction;
-      resident.industry = createDto.industry ?? undefined;
-      resident.regulatoryElection = createDto.regulatoryElection ?? undefined;
-      resident.regulatoryElectionSub = createDto.regulatoryElectionSub ?? undefined;
+      resident.industry = createDto.industry ?? null;
+      resident.regulatoryElection = createDto.regulatoryElection ?? null;
+      resident.regulatoryElectionSub = createDto.regulatoryElectionSub ?? null;
       resident.updatedAt = new Date();
       await this.residentRepo.save(resident);
     }

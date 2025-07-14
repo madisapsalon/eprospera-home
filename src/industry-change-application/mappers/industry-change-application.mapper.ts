@@ -46,15 +46,15 @@ export class IndustryChangeApplicationMapper {
 
   private static mapToIndustryInformationDto(
     willWorkInPhysicalJurisdiction: boolean,
-    industry?: Industry | string | null,
-    regulatoryElection?: RegulatoryElection | string | null,
+    industry?: Industry | null,
+    regulatoryElection?: RegulatoryElection | null,
     regulatoryElectionSub?: string | null
   ): IndustryInformationDto {
     const dto = new IndustryInformationDto();
     
     dto.willWorkInPhysicalJurisdiction = willWorkInPhysicalJurisdiction;
-    dto.industry = industry as Industry | null;
-    dto.regulatoryElection = regulatoryElection as RegulatoryElection | null;
+    dto.industry = industry;
+    dto.regulatoryElection = regulatoryElection;
     dto.regulatoryElectionSub = regulatoryElectionSub;
     
     return dto;

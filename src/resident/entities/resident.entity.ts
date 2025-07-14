@@ -8,22 +8,10 @@ import {
   OneToMany,
 } from 'typeorm';
 import { IndustryChangeApplication } from '../../industry-change-application/entities/industry-change-application.entity';
-
-export enum TypeOfRegistration {
-  E_RESIDENCY = 'E_RESIDENCY',
-  RESIDENCY = 'RESIDENCY',
-  LIMITED_E_RESIDENCY = 'LIMITED_E_RESIDENCY',
-}
-
-export enum TypeOfRegistrationSub {
-  HONDURAN = 'HONDURAN',
-  INTERNATIONAL = 'INTERNATIONAL',
-}
-
-export enum ResidentStatus {
-  ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE',
-}
+import { RegulatoryElection } from '../../industry-change-application/enums/regulatory-election.enum';
+import { TypeOfRegistration } from '../enums/type-of-registration.enum';
+import { TypeOfRegistrationSub } from '../enums/type-of-registration-sub.enum';
+import { ResidentStatus } from '../enums/resident-status.enum';
 
 @Entity({ name: 'residents' })
 @Unique(['sub'])
@@ -33,59 +21,58 @@ export class Resident {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   sub: string;
 
-  @Column({ name: 'first_name' })
+  @Column({ name: 'first_name', type: 'varchar' })
   firstName: string;
 
-  @Column({ name: 'last_name' })
+  @Column({ name: 'last_name', type: 'varchar' })
   lastName: string;
 
-  @Column({ name: 'full_name' })
+  @Column({ name: 'full_name', type: 'varchar' })
   fullName: string;
 
   @Column({ name: 'permit_number', type: 'int' })
   permitNumber: number;
 
   @Column({ name: 'permit_number_qr_code', type: 'text', nullable: true })
-  permitNumberQrCode?: string;
+  permitNumberQrCode?: string | null;
 
   @Column({ name: 'date_of_birth', type: 'date' })
   dateOfBirth: Date;
 
-  @Column({ name: 'country_of_birth' })
+  @Column({ name: 'country_of_birth', type: 'varchar' })
   countryOfBirth: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   email: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   citizenship: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   gender: string;
 
-  // Address fields
-  @Column({ name: 'address_country' })
+  @Column({ name: 'address_country', type: 'varchar' })
   addressCountry: string;
 
-  @Column({ name: 'address_city' })
+  @Column({ name: 'address_city', type: 'varchar' })
   addressCity: string;
 
-  @Column({ name: 'address_state', nullable: true })
-  addressState?: string;
+  @Column({ name: 'address_state', type: 'varchar', nullable: true })
+  addressState?: string | null;
 
-  @Column({ name: 'address_street_address' })
+  @Column({ name: 'address_street_address', type: 'varchar' })
   addressStreetAddress: string;
 
-  @Column({ name: 'address_zip_code' })
+  @Column({ name: 'address_zip_code', type: 'varchar' })
   addressZipCode: string;
 
   @Column({ name: 'address_is_verified', type: 'boolean', default: false })
   addressIsVerified: boolean;
 
-  @Column({ name: 'phone_number' })
+  @Column({ name: 'phone_number', type: 'varchar' })
   phoneNumber: string;
 
   @Column({
@@ -103,8 +90,8 @@ export class Resident {
   })
   typeOfRegistrationSub?: TypeOfRegistrationSub;
 
-  @Column({ nullable: true })
-  industry?: string;
+  @Column({ type: 'varchar', nullable: true })
+  industry?: string | null;
 
   @Column({
     name: 'will_work_in_physical_jurisdiction',
@@ -113,14 +100,19 @@ export class Resident {
   })
   willWorkInPhysicalJurisdiction: boolean;
 
-  @Column({ name: 'regulatory_election', nullable: true })
-  regulatoryElection?: string;
+  @Column({
+    name: 'regulatory_election',
+    type: 'enum',
+    enum: RegulatoryElection,
+    nullable: true
+  })
+  regulatoryElection?: RegulatoryElection | null;
 
-  @Column({ name: 'regulatory_election_sub', nullable: true })
-  regulatoryElectionSub?: string;
+  @Column({ name: 'regulatory_election_sub', type: 'varchar', nullable: true })
+  regulatoryElectionSub?: string | null;
 
   @Column({ name: 'first_registration_date', type: 'date', nullable: true })
-  firstRegistrationDate?: Date;
+  firstRegistrationDate?: Date | null;
 
   @Column({
     name: 'next_subscription_payment_date',
@@ -129,7 +121,7 @@ export class Resident {
   nextSubscriptionPaymentDate: Date;
 
   @Column({ name: 'profile_picture', type: 'text', nullable: true })
-  profilePicture?: string;
+  profilePicture?: string | null;
 
   @Column({
     type: 'enum',
@@ -139,7 +131,7 @@ export class Resident {
   status: ResidentStatus;
 
   @Column({ name: 'residency_end_date', type: 'date', nullable: true })
-  residencyEndDate?: Date;
+  residencyEndDate?: Date | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;

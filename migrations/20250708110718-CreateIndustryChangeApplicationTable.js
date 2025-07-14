@@ -25,11 +25,11 @@ exports.up = async function (db) {
 
       current_will_work_in_physical_jurisdiction BOOLEAN NOT NULL,
       current_industry VARCHAR(255),
-      current_regulatory_election VARCHAR(255),
+      current_regulatory_election regulatory_election_enum,
       current_regulatory_election_sub VARCHAR(255),
       requested_will_work_in_physical_jurisdiction BOOLEAN NOT NULL,
       requested_industry VARCHAR(255),
-      requested_regulatory_election VARCHAR(255),
+      requested_regulatory_election regulatory_election_enum,
       requested_regulatory_election_sub VARCHAR(255),
 
       status application_status_enum NOT NULL DEFAULT 'IN_REVIEW',

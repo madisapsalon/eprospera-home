@@ -1,0 +1,5 @@
+export enum TypeOfRegistration {
+    E_RESIDENCY = 'E_RESIDENCY',
+    RESIDENCY = 'RESIDENCY',
+    LIMITED_E_RESIDENCY = 'LIMITED_E_RESIDENCY',
+  }

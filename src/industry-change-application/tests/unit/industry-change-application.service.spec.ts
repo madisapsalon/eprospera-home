@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { Repository, DeepPartial, In } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { mockDeep } from 'jest-mock-extended';
 
 import { IndustryChangeApplicationService } from '../../industry-change-application.service';
 import { IndustryChangeApplication } from '../../entities/industry-change-application.entity';
-import { Resident, ResidentStatus, TypeOfRegistration, TypeOfRegistrationSub } from '../../../resident/entities/resident.entity';
+import { Resident } from '../../../resident/entities/resident.entity';
 import { CreateIndustryChangeApplicationDto } from '../../dto/create-industry-change-application.dto';
 import { FindIndustryChangeApplicationsDto } from '../../dto/find-industry-change-applications.dto';
 import { ApplicationStatus } from '../../enums/application-status.enum';
@@ -15,6 +15,8 @@ import { IndustryChangeApplicationMapper } from '../../mappers/industry-change-a
 import { Industry } from '../../enums/industry.enum';
 import { RegulatoryElection } from '../../enums/regulatory-election.enum';
 import { createDeepPartial } from '../../../../test/utils/create-deep-partial.util';
+import { TypeOfRegistration } from '../../../resident/enums/type-of-registration.enum';
+import { ResidentStatus } from '../../../resident/enums/resident-status.enum';
 
 describe('IndustryChangeApplicationService', () => {
   let service: IndustryChangeApplicationService;
@@ -216,9 +218,9 @@ describe('IndustryChangeApplicationService', () => {
         currentRegulatoryElection: RegulatoryElection.OPTION_B,
         currentRegulatoryElectionSub: 'SubOption2',
         requestedWillWorkInPhysicalJurisdiction: false,
-        requestedIndustry: undefined,
-        requestedRegulatoryElection: undefined,
-        requestedRegulatoryElectionSub: undefined,
+        requestedIndustry: null,
+        requestedRegulatoryElection: null,
+        requestedRegulatoryElectionSub: null,
         status: ApplicationStatus.APPROVED,
         submittedAt: expect.any(Date),
         decisionDecidedAt: expect.any(Date),
@@ -233,9 +235,9 @@ describe('IndustryChangeApplicationService', () => {
       
       expect(result).toEqual(savedApp);
       expect(appRepo.create).toHaveBeenCalledWith(expect.objectContaining({
-        requestedIndustry: undefined,
-        requestedRegulatoryElection: undefined,
-        requestedRegulatoryElectionSub: undefined,
+        requestedIndustry: null,
+        requestedRegulatoryElection: null,
+        requestedRegulatoryElectionSub: null,
       }));
     });
   });

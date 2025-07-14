@@ -29,7 +29,7 @@ exports.up = async function (db) {
         '1990-03-15', 'USA', 'alice@example.com', 'USA', 'FEMALE',
         'USA', 'New York', 'NY', '123 Main St', '10001',
         TRUE, '+1-212-555-0100', 'E_RESIDENCY', 'HONDURAN',
-        'TECH', TRUE, 'REG_ELECT_1', 'SUB_ELECT_1',
+        'TECHNOLOGY', TRUE, 'REG_ELECT_1', 'SUB_ELECT_1',
         '2025-01-01', '2026-01-01', 'iVBORw0KGgoAAA...', 'ACTIVE', NULL
       ),
       (

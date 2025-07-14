@@ -18,6 +18,7 @@ exports.up = async function (db) {
   await db.runSql("CREATE TYPE type_of_registration_enum AS ENUM ('E_RESIDENCY','RESIDENCY','LIMITED_E_RESIDENCY')");
   await db.runSql("CREATE TYPE type_of_registration_sub_enum AS ENUM ('HONDURAN','INTERNATIONAL')");
   await db.runSql("CREATE TYPE resident_status_enum AS ENUM ('ACTIVE','INACTIVE')");
+  await db.runSql("CREATE TYPE regulatory_election_enum AS ENUM ('REG_ELECT_1','REG_ELECT_2','REG_ELECT_3')");
   
   return db.runSql(`
     CREATE TABLE IF NOT EXISTS residents (
@@ -44,7 +45,7 @@ exports.up = async function (db) {
       type_of_registration_sub type_of_registration_sub_enum,
       industry VARCHAR(255),
       will_work_in_physical_jurisdiction BOOLEAN NOT NULL DEFAULT FALSE,
-      regulatory_election VARCHAR(255),
+      regulatory_election regulatory_election_enum,
       regulatory_election_sub VARCHAR(255),
       first_registration_date DATE,
       next_subscription_payment_date DATE NOT NULL,
@@ -63,6 +64,7 @@ exports.down = async function (db) {
   await db.runSql('DROP TYPE IF EXISTS resident_status_enum;');
   await db.runSql('DROP TYPE IF EXISTS type_of_registration_sub_enum;');
   await db.runSql('DROP TYPE IF EXISTS type_of_registration_enum;');
+  await db.runSql('DROP TYPE IF EXISTS regulatory_election_enum;');
   
   return null;
 };
