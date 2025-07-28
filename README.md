@@ -52,9 +52,4 @@ Local development database is available at [http://localhost:5432](http://localh
 - DATABASE_PASSWORD=postgres
 - DATABASE_NAME=eprospera
 
-## Deployment
-
-The application is deployed on AWS using GitHub Actions.
-
-The deployed application is available at [http://eprospera-home.madis.click/health](http://eprospera-home.madis.click/health)
 
